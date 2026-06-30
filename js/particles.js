@@ -9,7 +9,7 @@
       detectRetina: true,
       background: { color: "transparent" },
       particles: {
-        number: { value: 64, density: { enable: true, area: 900 } },
+        number: { value: Math.min(window.innerWidth, window.innerHeight) <= 540 ? 26 : 64, density: { enable: true, area: 900 } },
         color: { value: ["#38bdf8", "#a78bfa", "#f472b6", "#a3e635"] },
         links: {
           enable: true, distance: 150, color: "#3b5168",

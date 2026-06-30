@@ -45,12 +45,16 @@
     }
   }
 
+  /* ---------- mobile (small screen) → reflow instead of fixed 16:9 scaling ---------- */
+  var MOBILE = Math.min(window.innerWidth, window.innerHeight) <= 540;
+  if (MOBILE) document.documentElement.classList.add("is-mobile");
+
   /* ---------- init reveal ---------- */
   Reveal.initialize({
-    width: 1600, height: 900, margin: 0.045, minScale: 0.2, maxScale: 2.0,
-    hash: true, history: true, controls: true, progress: true,
-    slideNumber: "c/t", overview: true, center: true,
-    transition: "fade", transitionSpeed: "default", backgroundTransition: "fade",
+    width: 1600, height: 900, margin: MOBILE ? 0.02 : 0.045, minScale: 0.2, maxScale: 2.0,
+    hash: true, history: true, controls: !MOBILE, progress: true,
+    slideNumber: "c/t", overview: !MOBILE, center: !MOBILE, disableLayout: MOBILE,
+    transition: MOBILE ? "none" : "fade", transitionSpeed: "default", backgroundTransition: "fade",
     plugins: [RevealHighlight, RevealNotes, RevealMath.MathJax3],
     mathjax3: {
       mathjax: "vendor/mathjax/tex-svg.js",

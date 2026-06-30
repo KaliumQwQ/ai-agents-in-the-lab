@@ -263,6 +263,74 @@ html, body { background: var(--bg); }
 .reveal .fragment.fade-up { transform: translateY(18px); opacity: 0; transition: all .4s ease; }
 .reveal .fragment.fade-up.visible { transform: none; opacity: 1; }
 
+/* =============================================================================
+   MOBILE / portrait phones — reflow instead of fixed 16:9 scaling.
+   Activated by .is-mobile on <html> (set in reveal-init when the smaller screen
+   dimension <= 540px). Desktop/projector is completely unaffected.
+   ========================================================================== */
+html.is-mobile, html.is-mobile body { height: auto !important; overflow-y: auto !important; }
+.is-mobile .reveal, .is-mobile .reveal-viewport {
+  position: static !important; height: auto !important; overflow: visible !important;
+}
+.is-mobile .reveal .slides {
+  position: static !important; transform: none !important;
+  width: 100% !important; height: auto !important; left: 0 !important; top: 0 !important; right: auto !important; bottom: auto !important;
+  text-align: left;
+}
+/* show only the current slide, as a full-width flowing block */
+.is-mobile .reveal .slides > section { display: none !important; }
+.is-mobile .reveal .slides > section.present {
+  display: flex !important; flex-direction: column; justify-content: center;
+  position: relative !important; width: 100% !important; height: auto !important;
+  min-height: 88vh; box-sizing: border-box; padding: 7vh 5vw 9vh !important;
+  opacity: 1 !important; transform: none !important; top: auto !important; left: auto !important;
+  overflow-x: hidden;            /* a too-wide child scrolls itself, never widens the page */
+}
+.is-mobile .reveal .slides > section.present * { max-width: 100%; }
+.is-mobile .hero, .is-mobile .act-divider { min-height: 0; }
+
+/* stack every side-by-side layout */
+.is-mobile .grid.cols-2, .is-mobile .grid.cols-3, .is-mobile .grid.cols-4,
+.is-mobile .vs, .is-mobile .cvwrap { grid-template-columns: 1fr !important; }
+.is-mobile .grid { gap: .8rem !important; }
+.is-mobile .loop { flex-wrap: wrap; gap: .5rem; }
+.is-mobile .loop .arr { display: none; }
+.is-mobile .polends { flex-direction: column; gap: .5rem; }
+.is-mobile .polends div { width: 100% !important; text-align: left !important; }
+
+/* legible type (rem now renders at real px — no scaling) */
+.is-mobile .reveal h1 { font-size: 1.9rem; }
+.is-mobile .hero h1 { font-size: 2.1rem; }
+.is-mobile .reveal h2 { font-size: 1.5rem; }
+.is-mobile .reveal h3 { font-size: 1.15rem; }
+.is-mobile .reveal p, .is-mobile .reveal li { font-size: 1rem; }
+.is-mobile .lead, .is-mobile .big { font-size: 1.05rem; max-width: none; }
+.is-mobile .act-no { font-size: 4rem; }
+.is-mobile .kicker { font-size: .68rem; }
+
+/* diagrams / plots fit the width, never dominate the screen */
+.is-mobile .diagram { max-height: 40vh !important; width: 100%; }
+.is-mobile #cvplot { height: 44vh !important; }
+.is-mobile #cvplot-et { height: 90px !important; }
+.is-mobile .cv-metrics { grid-template-columns: 1fr 1fr; }
+.is-mobile .tafel-bar { height: 52px; }
+.is-mobile .tafel-bar > div { font-size: .62rem; }
+
+/* code & terminals */
+.is-mobile .reveal pre code { font-size: .58rem; max-height: 48vh; padding: .7rem; }
+.is-mobile .term { font: 400 .64rem/1.5 var(--mono); }
+
+/* equations: shrink, and let anything still too wide scroll within its own box */
+.is-mobile mjx-container { font-size: .8em !important; }
+.is-mobile mjx-container[display="true"] { max-width: 100% !important; }
+.is-mobile .center, .is-mobile .eqsmall, .is-mobile .eqbox {
+  max-width: 100%; overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch;
+}
+.is-mobile .eqsmall { font-size: .8rem; }
+
+/* a touch hint banner, only on phones, dismissable feel via fade */
+.is-mobile .reveal .progress { height: 5px; }
+
 /* chem species styling */
 .chem { font-family: var(--sans); white-space: nowrap; }
 .chem sub { font-size: .68em; }
